@@ -17,8 +17,15 @@
 # If the string length is less than 3, leave it unchanged.
 # Return the resulting string.
 def verbing(s):
-    # +++your code here+++
-    return
+    new_string = ''
+    if len(s) >= 3:
+        if s[-3:] == 'ing':
+            new_string = s[:] + s[-3:].replace('ing', 'ly')
+        else:
+            new_string = s +'ing'
+    else:
+        new_string = s
+    return new_string
 
 
 # E. not_bad
@@ -29,9 +36,19 @@ def verbing(s):
 # Return the resulting string.
 # So 'This dinner is not that bad!' yields:
 # This dinner is good!
+import  re
 def not_bad(s):
-    # +++your code here+++
-    return
+    new_string = ''
+    bad_len = s.find('bad')
+    not_len = s.find('not')
+    if bad_len > 0 and not_len > 0 and bad_len > not_len:
+        regex = r'not(.*?)bad'
+        matches = re.search(regex, s)
+        compare = str(matches.group(0))
+        new_string = s.replace(compare, 'good')
+    else:
+        new_string = s
+    return new_string
 
 
 # F. front_back
@@ -42,9 +59,23 @@ def not_bad(s):
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
-    # +++your code here+++
-    return
-
+    front_a = 0
+    front_b =0
+    back_a = 0
+    back_b = 0
+    if len(a) % 2 == 0:
+        front_a = int(len(a) / 2)
+        back_a = front_a
+    else:
+        front_a = int(round(len(a) / 2 + 0.499))
+        back_a = len(a) - front_a
+    if len(b) % 2 == 0:
+        front_b = int(len(b) / 2)
+        back_b = front_b
+    else:
+        front_b = int(round(len(b) / 2 + 0.499))
+        back_b = len(b) - front_b
+    return a[:front_a] + b[:front_b] + a[-back_a:] + b[-back_b:]
 
 # Simple provided test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
